@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      class MyEventEmitter {
+        constructor() {
+          this.events = {};
+        }
+        on(eventName, callback) {
+          if (this.events[eventName]) {
+            if (this.eventName !== "newListener") {
+              this.emit("newListener", eventName);
+            }
+          }
+          const callbacks = this.events[eventName] || [];
+          callbacks.push(callback);
+          this.events = callbacks;
+        }
+        emit(eventName, ...args) {
+          const callbacks = this.events[eventName] || [];
+          callbacks.forEach((cb) => cb(...args));
+        }
+        off(eventName, callback) {
+          const callbacks = this.events[eventName] || [];
+          const newCallbacks = callbacks.filter(
+            (fn) => fn !== callback && fn.initialCallback !== callback
+          );
+          this.events[eventName] = newCallbacks;
+        }
+        once(eventName, callback) {
+          const one = (...args) => {
+            callback(...args);
+            this.off(eventName, one);
+          };
+
+          one.initialCallback = callback;
+          this.on(eventName, one);
+        }
+      }
+    </script>
+  </body>
+</html>

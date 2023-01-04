@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        class Person {
+            name
+            age
+            height
+            constructor(name, age, height) {
+                this.name = name
+                this.age = age
+                this.height = height
+                this.run = new Animal("小强", "蟑螂").run
+            }
+
+            eat() {
+                console.log('1', this, '2', typeof this, '3', this.run)
+                this.run()
+                console.log("吃饭")
+            }
+
+            say() {
+                console.log("说话")
+            }
+        }
+
+        class Animal {
+            name
+            type
+            constructor(name, type) {
+                this.name = name
+                this.type = type
+            }
+
+            shout() {
+                console.log("喊叫")
+            }
+
+            run() {
+                console.log(this)
+                console.log("跑步")
+            }
+        }
+
+
+        // 等同于
+        function Person1(name, age, height) {
+            this.name = name
+            this.age = age
+            this.height = height
+            console.log(this)
+        }
+
+        Person1.prototype.eat = function () {
+            console.log(this)
+            console.log("吃饭")
+        }
+
+        Person1.prototype.say = function () {
+            console.log("说话")
+        }
+
+        /* let person1 = new Person1("wdh", 18, 190) */
+        // this为实例对象
+        /* person1.eat() */
+
+        // this为原型对象
+        /* Person1.prototype.eat() */
+
+        let person2 = new Person("wdh", 18, 170)
+        person2.eat()
+    </script>
+</body>
+
+</html>

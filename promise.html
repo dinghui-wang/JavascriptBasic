@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>promise</title>
+</head>
+
+<body>
+  <script>
+    class MyPromise {
+      // 定义 MyPromise类 初始静态状态
+      static PENDING = "pending";
+      static FULFILLED = "fulfilled";
+      static REJECTED = "rejected";
+
+      /* 
+        初始，Promise传入一个function，
+        function包含两个函数参数(resolve,reject), 
+        待promisestate改变使用对应的函数返回对应的结果
+      */
+      constructor(func) {
+        this.PromiseState = MyPromise.PENDING;
+        this.PromiseResult = null;
+        this.onFulfilledCallbacks = [];
+        this.onRejectedCallbacks = [];
+        try {
+          func(this.resolve.bind(this), this.reject.bind(this));
+        } catch (error) {
+          this.reject(error);
+        }
+      }
+
+      resolve(result) {
+        if (this.PromiseState === myPromise.PENDING) {
+          this.PromiseState = myPromise.FULFILLED;
+          this.PromiseResult = result;
+        }
+      }
+
+      reject(reason) {
+        if (this.PromiseState === myPromise.PENDING) {
+          this.PromiseState = myPromise.REJECT;
+          this.PromiseResult = reason;
+        }
+      }
+
+      then(onFulfilled, onRejected) {
+        onFulfilled = typeof onFulfilled === "function" ? onFulfilled : (value) => value;
+        onRejected = typeof onRejected === "function" ? onRejected : (reason) => { throw reason };
+        if (this.PromiseState === MyPromise.FULFILLED) {
+          onFulfilled(this.PromiseResult);
+        }
+        if (this.PromiseState === MyPromise.REJECTED) {
+          onRejected(this.PromiseResult);
+        }
+      }
+    }
+  </script>
+</body>
+
+</html>
